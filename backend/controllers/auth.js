@@ -1,7 +1,7 @@
 const { findOne } = require('../models/User');
 const User = require('../models/User');
 const ErrorResponse = require('../utils/errorResponse');
-const errorResponse = require('../utils/errorResponse');
+// const errorResponse = require('../utils/errorResponse');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
 

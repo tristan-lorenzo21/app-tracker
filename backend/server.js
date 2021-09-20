@@ -13,6 +13,7 @@ app.use(express.json());
 // whenever a request comes in, this piece of middleware catches it and checks if its api/auth/... 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/private', require('./routes/private'));
+app.use('/api/applications', require('./routes/applications'));
 
 // Error Handler (should be the last piece of middleware)
 app.use(errorHandler);
