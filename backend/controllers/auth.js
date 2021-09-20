@@ -1,5 +1,7 @@
 const { findOne } = require('../models/User');
 const User = require('../models/User');
+const ErrorResponse = require('../utils/errorResponse');
+const errorResponse = require('../utils/errorResponse');
 
 // "next" is used for error handling
 // this is the register route
@@ -18,10 +20,7 @@ exports.register = async (req, res, next) => {
         // logs user into console
         console.log(user);
     } catch (error) {
-        res.status(500).json({
-            success: false, 
-            error: error.message,
-        });
+        next(error);
     }
 };
 
@@ -32,7 +31,7 @@ exports.login = async (req, res, next) => {
 
     // checks if email or password is filled in the backend
     if (!email || !password) {
-        res.status(400).json({success: false, error: "Please provide an email and password"})
+        return next(new ErrorResponse("Please provide an email and password", 400));
     };
 
     try {
@@ -40,7 +39,7 @@ exports.login = async (req, res, next) => {
 
         // if we dont get a user back, send an error message
         if (!user) {
-            res.status(404).json({success: false, error: "Invalid Credentials"})
+            return next(new ErrorResponse("Invalid Credentials", 401));
         }
 
         // compare password if it matches
@@ -48,7 +47,7 @@ exports.login = async (req, res, next) => {
 
         // checks if the passwords match 
         if (!isMatch) {
-            res.status(404).json({success: false, error: "Invalid Password"});
+            return next(new ErrorResponse("Invalid Credentials", 401));
         };
 
         res.status(200).json({

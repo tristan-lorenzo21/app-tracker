@@ -1,6 +1,7 @@
 require('dotenv').config({path: "debug./config.env"});
 const express = require('express');
 const connectDB = require('./config/db');
+const errorHandler = require("./middleware/error");
 
 // Connect DB
 connectDB();
@@ -11,6 +12,9 @@ app.use(express.json());
 
 // whenever a request comes in, this piece of middleware catches it and checks if its api/auth/... 
 app.use('/api/auth', require('./routes/auth'));
+
+// Error Handler (should be the last piece of middleware)
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
