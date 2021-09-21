@@ -25,6 +25,7 @@ exports.protect = async (req, res, next) => {
 
         req.user = user;
 
+        console.log(user);
         next();
     } catch (error) {
         return next(new ErrorResponse("Not authorized to access this route", 401))
