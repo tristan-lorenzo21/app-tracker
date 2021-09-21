@@ -59,6 +59,10 @@ exports.login = async (req, res, next) => {
 
 };
 
+exports.getUser = async (req, res, next) => {
+    res.status(200).json({success: true, data:"Get user route"});
+};
+
 // this is the forgot password route
 exports.forgotPassword = async (req, res, next) => {
     const { email } = req.body;
