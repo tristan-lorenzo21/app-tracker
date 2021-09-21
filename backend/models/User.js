@@ -52,7 +52,7 @@ UserSchema.methods.matchPasswords = async function(password) {
 
 UserSchema.methods.getSignedToken = function() {
     // we are calling "this" on the object that is being called, which is the User object
-    return jwt.sign({ id: this._id}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE })
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE })
 }
 
 UserSchema.methods.getResetPasswordToken = function() {
