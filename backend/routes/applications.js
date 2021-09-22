@@ -5,7 +5,7 @@ const { displayApplications, createApplication, deleteApplication, updateApplica
 
 router.route("/displayApplications").get(displayApplications);
 router.route("/createApplication").post(createApplication);
-router.route("/deleteApplication/:id").post(deleteApplication);
+router.route("/deleteApplication/:id").delete(deleteApplication);
 router.route("/updateApplication/:id").put(updateApplication);
 
 module.exports = router;
