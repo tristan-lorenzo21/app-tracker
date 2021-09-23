@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const protect = require('../middleware/auth');
 const auth = require('./auth');
 
+// route that creates applications
 exports.createApplication = async (req, res, next) => {
     const { company, position, stage, status, comments, dateApplied } = req.body;
 
@@ -56,6 +57,7 @@ exports.createApplication = async (req, res, next) => {
     }
 }
 
+// route that displays logged in user's applications
 exports.displayApplications = async (req, res, next) => {
     let token; 
 
@@ -87,6 +89,7 @@ exports.displayApplications = async (req, res, next) => {
     }
 }
 
+// route that deletes a selected application
 exports.deleteApplication = async (req, res, next) => {
     // res.status(200).json({ message: "Delete application route" });
     let token; 
@@ -121,6 +124,7 @@ exports.deleteApplication = async (req, res, next) => {
     }
 }
 
+// route that updates a selected application
 exports.updateApplication = (req, res, next) => {
     res.status(200).json({ message: "Update application route" });
 }
