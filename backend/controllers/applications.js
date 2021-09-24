@@ -91,7 +91,6 @@ exports.displayApplications = async (req, res, next) => {
 
 // route that deletes a selected application
 exports.deleteApplication = async (req, res, next) => {
-    // res.status(200).json({ message: "Delete application route" });
     let token; 
 
     if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
