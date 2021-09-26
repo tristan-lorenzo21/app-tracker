@@ -12,14 +12,14 @@ exports.createApplication = async (req, res, next) => {
 
     // const user = auth.
 
-    let token; 
+    let token;
 
-    if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
         // Bearer 3489sdf0n9s8fs09d
         token = req.headers.authorization.split(" ")[1];
     }
 
-    if(!token) {
+    if (!token) {
         return next(new ErrorResponse("Not authorized to access this route", 401));
     }
 
@@ -29,7 +29,7 @@ exports.createApplication = async (req, res, next) => {
 
         const user = await User.findById(decoded.id);
 
-        if(!user) {
+        if (!user) {
             return next(new ErrorResponse("No user found with this id", 404));
         }
 
@@ -39,12 +39,12 @@ exports.createApplication = async (req, res, next) => {
 
         // adding application logic
         const application = await Application.create({
-            username, 
-            company, 
-            position, 
-            stage, 
-            status, 
-            comments, 
+            username,
+            company,
+            position,
+            stage,
+            status,
+            comments,
             dateApplied
         });
 
@@ -59,13 +59,13 @@ exports.createApplication = async (req, res, next) => {
 
 // route that displays logged in user's applications
 exports.displayApplications = async (req, res, next) => {
-    let token; 
+    let token;
 
-    if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
         token = req.headers.authorization.split(" ")[1];
     }
 
-    if(!token) {
+    if (!token) {
         return next(new ErrorResponse("Not authorized to access this route", 401));
     }
 
@@ -75,15 +75,15 @@ exports.displayApplications = async (req, res, next) => {
 
         const user = await User.findById(decoded.id);
 
-        if(!user) {
+        if (!user) {
             return next(new ErrorResponse("No user found with this id", 404));
         }
 
         req.user = user;
 
         const username = user.username;
-        const userApplications = await Application.find({username: username})
-        res.status(200).json({ message: "Display applications route", userApplications });
+        const userApplications = await Application.find({ username: username })
+        res.status(200).json({ message: `Application route for ${username}`, userApplications });
     } catch (error) {
         next(error);
     }
@@ -91,13 +91,13 @@ exports.displayApplications = async (req, res, next) => {
 
 // route that deletes a selected application
 exports.deleteApplication = async (req, res, next) => {
-    let token; 
+    let token;
 
-    if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
         token = req.headers.authorization.split(" ")[1];
     }
 
-    if(!token) {
+    if (!token) {
         return next(new ErrorResponse("Not authorized to access this route", 401));
     }
 
@@ -107,12 +107,12 @@ exports.deleteApplication = async (req, res, next) => {
 
         const user = await User.findById(decoded.id);
 
-        if(!user) {
+        if (!user) {
             return next(new ErrorResponse("No user found with this id", 404));
         }
 
         req.user = user;
-        
+
         const application = await Application.findByIdAndDelete(req.params.id);
 
         console.log(application);
