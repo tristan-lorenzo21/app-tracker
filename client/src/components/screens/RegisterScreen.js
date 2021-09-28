@@ -39,7 +39,7 @@ const RegisterScreen = ({ history }) => {
 
             localStorage.setItem("authToken", data.token);
 
-            history.pushState("/");
+            history.pushState("/displayApplications");
         } catch (error) {
             setError(error.response.data.error);
             setTimeout(() => {
