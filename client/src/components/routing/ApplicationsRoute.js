@@ -1,6 +1,6 @@
 import { Redirect, Route } from "react-router-dom";
 
-const ApplicationsRoute = ({ component: Component, ...rest }) => {
+const DashboardRoute = ({ component: Component, ...rest }) => {
     return (
         <Route
             {...rest}
@@ -15,4 +15,4 @@ const ApplicationsRoute = ({ component: Component, ...rest }) => {
     );
 };
 
-export default ApplicationsRoute;
+export default DashboardRoute;
