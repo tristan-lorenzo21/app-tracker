@@ -6,6 +6,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Modal from "@material-ui/core/Modal";
+import Fade from '@material-ui/core/Fade';
+import Backdrop from '@material-ui/core/Backdrop';
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,6 +17,8 @@ import {
     DatePicker,
     MuiPickersUtilsProvider
 } from '@material-ui/pickers';
+import NavBar from "./NavBar";
+import Loading from "./Loading";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -120,61 +124,69 @@ const Dashboard = ({ history }) => {
     const handleClose = () => setOpen(false);
 
     return error ? (
-        <span className="error-message">{error}</span>
+        // <span className="error-message">{error}</span>
+        <Loading size={10} />
     ) : (
         <>
+            <NavBar applications={applications} logoutHandler={logoutHandler} />
             <DisplayApplicationsChild applications={applications} />
 
-            <Button variant="outlined" color="secondary" onClick={logoutHandler} className="logout-btn">Logout</Button>
             <Button variant="contained" color="primary" onClick={handleOpen} className={classes.createApplicationButton}>+</Button>
 
             <Modal
                 open={open}
                 onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500
+                }}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <div style={{ margin: "0px" }}>
-                    <Grid container spacing={2}>
-                        <Box sx={style}>
-                            <Typography id="modal-modal-title" variant="h6" component="h2">
-                                Create a new application
-                            </Typography>
+                <Fade in={open}>
+                    <div style={{ margin: "0px" }}>
+                        <Grid container spacing={2} style={{ width: "0px", margin: "0px" }}>
+                            <Box sx={style}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Create a new application
+                                </Typography>
 
 
-                            <form onSubmit={createApplicationHandler}>
-                                <Grid container item spacing={5}>
-                                    <Grid item xs={5}>
-                                        <TextField required id="standard-basic" label="Company" variant="standard" onChange={(e) => setCompany(e.target.value)} value={company} />
+                                <form onSubmit={createApplicationHandler}>
+                                    <Grid container item spacing={5} justify="center">
+                                        <Grid item xs={5}>
+                                            <TextField required id="standard-basic" label="Company" variant="standard" onChange={(e) => setCompany(e.target.value)} value={company} />
+                                        </Grid>
+                                        <Grid item xs={5}>
+                                            <TextField required id="standard-basic" label="Position" variant="standard" onChange={(e) => setPosition(e.target.value)} value={position} />
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={5}>
-                                        <TextField required id="standard-basic" label="Position" variant="standard" onChange={(e) => setPosition(e.target.value)} value={position} />
+                                    <Grid container item spacing={5} justify="center">
+                                        <Grid item xs={5}>
+                                            <TextField required id="standard-basic" label="Stage" variant="standard" onChange={(e) => setStage(e.target.value)} value={stage} />
+                                        </Grid>
+                                        <Grid item xs={5}>
+                                            <TextField required id="standard-basic" label="Status" variant="standard" onChange={(e) => setStatus(e.target.value)} value={status} />
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                                <Grid container item spacing={5}>
-                                    <Grid item xs={5}>
-                                        <TextField required id="standard-basic" label="Stage" variant="standard" onChange={(e) => setStage(e.target.value)} value={stage} />
+                                    <Grid container item spacing={5} justify="center">
+                                        <Grid item xs={5}>
+                                            <TextField required id="standard-basic" label="Comments" variant="standard" onChange={(e) => setComments(e.target.value)} value={comments} />
+                                        </Grid>
+                                        <Grid item xs={5} justify="center">
+                                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                <DatePicker clearable required label="Date" value={dateApplied} onChange={(dateApplied) => setDateApplied(dateApplied)} />
+                                            </MuiPickersUtilsProvider>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={5}>
-                                        <TextField required id="standard-basic" label="Status" variant="standard" onChange={(e) => setStatus(e.target.value)} value={status} />
-                                    </Grid>
-                                </Grid>
-                                <Grid container item spacing={5}>
-                                    <Grid item xs={5}>
-                                        <TextField required id="standard-basic" label="Comments" variant="standard" onChange={(e) => setComments(e.target.value)} value={comments} />
-                                    </Grid>
-                                    <Grid item xs={5}>
-                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                            <DatePicker clearable required label="Date" value={dateApplied} onChange={(dateApplied) => setDateApplied(dateApplied)} />
-                                        </MuiPickersUtilsProvider>
-                                    </Grid>
-                                </Grid>
 
-                                <Button variant="outlined" color="primary" type="submit">Create Application</Button>
-                            </form>
-                        </Box>
-                    </Grid>
-                </div>
+                                    <Button variant="outlined" color="primary" type="submit" style={{ marginTop: "30px" }}>Create Application</Button>
+                                </form>
+                            </Box>
+                        </Grid>
+                    </div>
+                </Fade>
             </Modal>
         </>
     );
