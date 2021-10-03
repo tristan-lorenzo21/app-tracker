@@ -4,35 +4,35 @@ const Schema = mongoose.Schema;
 
 const ApplicationSchema = new Schema({
     username: {
-        type: String, 
+        type: String,
         required: true
     },
     company: {
-        type: String, 
+        type: String,
         required: true
     },
     position: {
-        type: String, 
+        type: String,
         required: true
     },
     stage: {
-        type: String, 
+        type: String,
         required: true
-    }, 
+    },
     status: {
-        type: String, 
+        type: String,
         required: true
     },
     comments: {
-        type: String, 
+        type: String,
         required: true
     },
     dateApplied: {
-        type: Date, 
+        type: Date,
         required: true
-    }
+    },
 }, {
-    timestamps: true, 
+    timestamps: true,
 });
 
 const Application = mongoose.model('Application', ApplicationSchema);
