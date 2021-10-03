@@ -19,6 +19,9 @@ import {
 } from '@material-ui/pickers';
 import NavBar from "./NavBar";
 import Loading from "./Loading";
+import BusinessIcon from '@material-ui/icons/Business';
+
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -67,6 +70,7 @@ const Dashboard = ({ history }) => {
     const [status, setStatus] = useState("");
     const [comments, setComments] = useState("");
     const [dateApplied, setDateApplied] = useState(null);
+    // const [companyLogo, setCompanyLogo] = useState("");
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -116,6 +120,7 @@ const Dashboard = ({ history }) => {
 
         } catch (error) {
             setError(error.response.data.error);
+            // setError("Error");
         }
     }
 

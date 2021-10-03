@@ -45,7 +45,7 @@ exports.createApplication = async (req, res, next) => {
             stage,
             status,
             comments,
-            dateApplied
+            dateApplied,
         });
 
         console.log(application);
