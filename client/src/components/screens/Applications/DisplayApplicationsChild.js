@@ -1,23 +1,33 @@
 import * as React from 'react';
-import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
-import Loading from './Loading';
 import moment from 'moment';
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import BusinessIcon from '@material-ui/icons/Business';
 import Avatar from '@material-ui/core/Avatar';
-import axios from 'axios';
+import { makeStyles } from "@material-ui/core/styles";
+import NavBar from "./NavBar";
 
-const DisplayApplicationsChild = (props) => {
+const useStyles = makeStyles({
+    root: {
+        minWidth: 300,
+        maxWidth: 500,
+        margin: "10px 15px 10px 0",
+    },
+    headerTitle: {
+        maxWidth: 300,
+        fontWeight: 600,
+        fontSize: 25
+    },
+});
 
-    const companyLogos = "https://logo.clearbit.com/pinterest.com";
+const DisplayApplicationsChild = (props, { history }) => {
+    const classes = useStyles();
 
     const displayAplications = (props) => {
         const { applications } = props;
@@ -28,41 +38,55 @@ const DisplayApplicationsChild = (props) => {
                     const formattedDate = moment(application.dateApplied).format('MM-DD-YY');
 
                     return (
-                        <Box component="span" style={{ display: 'inline-block', transform: 'scale(0.8)', minWidth: 275, padding: '20px' }} >
+                        // <Container>
+                        <Box component="span" style={{ display: 'inline-block', marginLeft: '300px' }}>
                             <React.Fragment>
-                                <Card variant="outlined" style={{ height: "250px", width: "300px" }}>
-                                    <CardHeader
-                                        action={
-                                            <IconButton color="primary" >
-                                                <MoreVertIcon fontSize="large" />
-                                            </IconButton>
-                                        }
-                                        avatar={
-                                            <Avatar src={companyLogos} aria-label={`company-logo`} style={{ width: "55px", height: "55px" }} />
-                                        }
-                                        title={application.company}
-                                        subheader={`Applied on: ${formattedDate}`}
-                                    />
-                                    <CardContent>
-                                        <Typography variant="h5" component="div" style={{ fontColor: "" }}>
-                                            {application.position}
-                                        </Typography>
-                                        <Typography style={{ mb: 1.5 }} color="text.secondary">
-                                            {application.status}
-                                        </Typography>
-                                        <Typography variant="body2">
-                                            {application.comments}
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
+                                {/* <Container> */}
+                                <Grid container spacing={1} columns={1}>
+                                    <Grid item xs={1} >
+                                        <Card variant="outlined" style={{ height: "250px", width: "300px" }}>
+                                            <CardHeader
+                                                action={
+                                                    <IconButton color="primary" >
+                                                        <MoreVertIcon fontSize="large" />
+                                                    </IconButton>
+                                                }
+                                                avatar={
+                                                    <Avatar src={application.companyLogo} aria-label={`company-logo`} style={{ width: "55px", height: "55px" }} />
+                                                }
+                                                title={application.company}
+                                                subheader={`Applied on: ${formattedDate}`}
+                                                classes={{
+                                                    title: classes.headerTitle
+                                                }}
+                                            />
+                                            <CardContent style={{ paddingTop: 0, paddingLeft: "25px", paddingRight: "25px" }}>
+                                                <Typography variant="h5" component="div" style={{ fontColor: "" }}>
+                                                    {application.position}
+                                                </Typography>
+                                                <Typography style={{ mb: 1.5 }} color="text.secondary">
+                                                    {application.status}
+                                                </Typography>
+                                                <Typography variant="body2">
+                                                    {application.comments}
+                                                </Typography>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                </Grid>
+                                {/* </Container> */}
                             </React.Fragment>
                         </Box>
+                        // {/* </Container> */}
                     )
                 })
             )
         } else {
-            // return (<h3>No applications yet</h3>)
-            <Loading size={10} />
+            return (
+                <>
+                    <h3>No applications yet </h3>
+                </>
+            )
         }
     }
     return (

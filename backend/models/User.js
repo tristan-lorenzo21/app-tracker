@@ -5,34 +5,34 @@ const crypto = require('crypto');
 
 const UserSchema = new mongoose.Schema({
     username: {
-        type: String, 
-        required: [true, "Please provide a username"], 
-        unique: true, 
+        type: String,
+        required: [true, "Please provide a username"],
+        unique: true,
     },
     email: {
-        type: String, 
+        type: String,
         required: [true, "Please provide an email"],
-        unique: true, 
+        unique: true,
         match: [
             // checks if email is valid
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             "Please provide a valid email",
         ]
-    }, 
+    },
     password: {
-        type: String, 
+        type: String,
         required: [true, "Please provide a password"],
-        minlength: 6, 
+        minlength: 6,
         // when a user is queried, if select is set to false, the password is not included in query
         select: false
     },
-    resetPasswordToken: String, 
+    resetPasswordToken: String,
     resetPasswordExpire: Date
 });
 
 // checks if password was modified, otherwise, follow through
-UserSchema.pre("save", async function(next) {
-    if(!this.isModified("password")) {
+UserSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) {
         next();
     }
 
@@ -44,18 +44,19 @@ UserSchema.pre("save", async function(next) {
 });
 
 // this function receives a password from the user
-UserSchema.methods.matchPasswords = async function(password) {
+UserSchema.methods.matchPasswords = async function (password) {
     // compares the password that is inputed to the one that is pulled from the database
     // this.password refers to the password selected from the user database
     return await bcrypt.compare(password, this.password);
 };
 
-UserSchema.methods.getSignedToken = function() {
+UserSchema.methods.getSignedToken = function () {
     // we are calling "this" on the object that is being called, which is the User object
-    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE })
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET);
+    // return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE })
 }
 
-UserSchema.methods.getResetPasswordToken = function() {
+UserSchema.methods.getResetPasswordToken = function () {
     // creates reset token
     const resetToken = crypto.randomBytes(20).toString("hex");
 

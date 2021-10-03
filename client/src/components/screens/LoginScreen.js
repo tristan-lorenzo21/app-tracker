@@ -31,6 +31,7 @@ const LoginScreen = ({ history }) => {
             );
 
             localStorage.setItem("authToken", data.token);
+            localStorage.setItem("username", data.data.username);
 
             history.push("/displayApplications");
         } catch (error) {
