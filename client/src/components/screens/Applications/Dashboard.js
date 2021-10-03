@@ -11,7 +11,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import "react-datepicker/dist/react-datepicker.css";
-import { Grid } from "@material-ui/core";
+import { Drawer, FormHelperText, Grid } from "@material-ui/core";
 import DateFnsUtils from '@date-io/date-fns';
 import {
     DatePicker,
@@ -19,6 +19,7 @@ import {
 } from '@material-ui/pickers';
 import NavBar from "./NavBar";
 import Loading from "./Loading";
+import MainDrawer from "./MainDrawer";
 import BusinessIcon from '@material-ui/icons/Business';
 
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -39,6 +40,9 @@ const useStyles = makeStyles(theme => ({
     },
     input: {
         display: "none"
+    },
+    root: {
+        display: "flex"
     }
 }));
 
@@ -70,7 +74,9 @@ const Dashboard = ({ history }) => {
     const [status, setStatus] = useState("");
     const [comments, setComments] = useState("");
     const [dateApplied, setDateApplied] = useState(null);
+    const [loading, setLoading] = useState(false);
     // const [companyLogo, setCompanyLogo] = useState("");
+    // const [username, setUsername] = useState("");
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -83,11 +89,16 @@ const Dashboard = ({ history }) => {
 
             try {
                 const { data } = await axios.get("/api/applications/displayApplications", config);
+
                 setApplications(data.userApplications);
+
+                setLoading(true);
             } catch (error) {
                 localStorage.removeItem("authToken");
+                localStorage.removeItem("username");
                 setError("You are not authorized please login");
             }
+            console.log(applications);
         };
 
         fetchApplications();
@@ -95,6 +106,7 @@ const Dashboard = ({ history }) => {
 
     const logoutHandler = () => {
         localStorage.removeItem("authToken");
+        localStorage.removeItem("username");
         history.push("/login");
     }
 
@@ -124,19 +136,22 @@ const Dashboard = ({ history }) => {
         }
     }
 
+    // setUsername(applications[0].username);
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     return error ? (
-        // <span className="error-message">{error}</span>
-        <Loading size={10} />
+        <span className="error-message">{error}</span>
+        // <Loading size={10} />
+
     ) : (
         <>
-            <NavBar applications={applications} logoutHandler={logoutHandler} />
-            <DisplayApplicationsChild applications={applications} />
-
-            <Button variant="contained" color="primary" onClick={handleOpen} className={classes.createApplicationButton}>+</Button>
+            {/* <NavBar logoutHandler={logoutHandler} /> */}
+            <MainDrawer logoutHandler={logoutHandler} />
+            {loading ? (<DisplayApplicationsChild applications={applications} />) : (<Loading size={10} />)}
+            {loading ? (<Button variant="contained" color="primary" onClick={handleOpen} className={classes.createApplicationButton}>+</Button>) : (<Loading size={10} />)}
 
             <Modal
                 open={open}
@@ -150,7 +165,7 @@ const Dashboard = ({ history }) => {
                 aria-describedby="modal-modal-description"
             >
                 <Fade in={open}>
-                    <div style={{ margin: "0px" }}>
+                    <div style={{ margin: "0px", paddingLeft: "200px" }}>
                         <Grid container spacing={2} style={{ width: "0px", margin: "0px" }}>
                             <Box sx={style}>
                                 <Typography id="modal-modal-title" variant="h6" component="h2">

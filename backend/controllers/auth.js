@@ -50,9 +50,9 @@ exports.login = async (req, res, next) => {
         };
 
         sendToken(user, 200, res);
-    } catch (error){
+    } catch (error) {
         res.status(500).json({
-            success: false, 
+            success: false,
             error: error.message
         })
     }
@@ -60,7 +60,7 @@ exports.login = async (req, res, next) => {
 };
 
 exports.getUser = async (req, res, next) => {
-    res.status(200).json({success: true, data:"Get user route"});
+    res.status(200).json({ success: true, data: "Get user route" });
 };
 
 // this is the forgot password route
@@ -68,9 +68,9 @@ exports.forgotPassword = async (req, res, next) => {
     const { email } = req.body;
 
     try {
-        const user = await User.findOne({email});
+        const user = await User.findOne({ email });
 
-        if(!user) {
+        if (!user) {
             return next(new ErrorResponse("Email could not be sent", 404))
         }
 
@@ -121,7 +121,7 @@ exports.resetPassword = async (req, res, next) => {
             resetPasswordExpire: { $gt: Date.now() }
         });
 
-        if(!user) {
+        if (!user) {
             return next(new ErrorResponse("Invalid Reset Token", 400))
         };
 
@@ -142,5 +142,5 @@ exports.resetPassword = async (req, res, next) => {
 
 const sendToken = (user, statusCode, res) => {
     const token = user.getSignedToken();
-    res.status(statusCode).json({ success: true, token});
+    res.status(statusCode).json({ success: true, token, data: user });
 };

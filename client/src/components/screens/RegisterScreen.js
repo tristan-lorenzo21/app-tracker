@@ -38,6 +38,7 @@ const RegisterScreen = ({ history }) => {
             const { data } = await axios.post("/api/auth/register", { username, email, password }, config);
 
             localStorage.setItem("authToken", data.token);
+            localStorage.setItem("username", data.data.username);
 
             history.pushState("/displayApplications");
         } catch (error) {

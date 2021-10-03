@@ -5,6 +5,7 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const protect = require('../middleware/auth');
 const auth = require('./auth');
+const axios = require('axios');
 
 // route that creates applications
 exports.createApplication = async (req, res, next) => {
@@ -37,6 +38,9 @@ exports.createApplication = async (req, res, next) => {
 
         const username = user.username;
 
+        const companyData = await axios.get(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${company}`);
+        const companyLogo = companyData.data[1].logo;
+
         // adding application logic
         const application = await Application.create({
             username,
@@ -46,6 +50,7 @@ exports.createApplication = async (req, res, next) => {
             status,
             comments,
             dateApplied,
+            companyLogo
         });
 
         console.log(application);

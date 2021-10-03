@@ -31,6 +31,11 @@ const ApplicationSchema = new Schema({
         type: Date,
         required: true
     },
+    companyLogo: {
+        type: String,
+        required: true,
+        default: "https://cdn-icons-png.flaticon.com/512/188/188391.png"
+    }
 }, {
     timestamps: true,
 });

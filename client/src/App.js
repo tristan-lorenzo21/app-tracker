@@ -13,9 +13,10 @@ import Dashboard from './components/screens/Applications/Dashboard';
 import DashboardRoute from './components/routing/ApplicationsRoute';
 
 const App = () => {
+  // const classes = useStyles();
   return (
     <Router>
-      <div className="App">
+      <div>
         <Switch>
           <PrivateRoute exact path="/" component={PrivateScreen} />
           <DashboardRoute exact path="/displayApplications" component={Dashboard} />
@@ -25,7 +26,7 @@ const App = () => {
           <Route exact path="/passwordreset/:resetToken" component={ResetPasswordScreen} />
         </Switch>
       </div>
-    </Router>
+    </Router >
   );
 }
 
