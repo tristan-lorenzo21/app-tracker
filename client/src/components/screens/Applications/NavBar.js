@@ -11,8 +11,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const style = makeStyles({
     logoutButton: {
-        textAlign: "right",
-        display: "block",
+        float: "right",
+        display: "inline-block",
+    },
+    appBar: {
+        maxHeight: "70px",
+    },
+    usernameDisplay: {
+        paddingLeft: "200px"
     }
 })
 
@@ -27,7 +33,7 @@ const NavBar = (props) => {
 
         return (
             <Box style={{ flexGrow: 1, display: "flex" }}>
-                <AppBar position="static">
+                <AppBar position="static" className={classes.appBar} elevation={0}>
                     <Toolbar>
                         <IconButton
                             size="large"
@@ -39,12 +45,9 @@ const NavBar = (props) => {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} className={classes.usernameDisplay}>
                             Welcome, {username}
                         </Typography>
-                    </Toolbar>
-                    <Toolbar className={classes.logoutButton}>
-                        <Button color="inherit" onClick={logoutHandler}>Logout</Button>
                     </Toolbar>
                 </AppBar>
             </Box>

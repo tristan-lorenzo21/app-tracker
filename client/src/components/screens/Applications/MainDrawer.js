@@ -10,10 +10,18 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles({
     drawer: {
-        width: drawerWidth
+        width: drawerWidth,
+        background: "black"
     },
     drawerPaper: {
-        width: drawerWidth
+        width: drawerWidth,
+        background: "white"
+    },
+    logoutButton: {
+        position: "absolute",
+        bottom: 0,
+        // right: 0,
+        textAlign: "center"
     }
 })
 
@@ -23,13 +31,13 @@ const MainDrawer = (props) => {
 
     return (
         <div>
-            <Drawer className={mergeClasses.drawer} variant="permanent" anchor="left" classes={{ paper: classes.drawerPaper }}>
+            <Drawer className={classes.drawer} variant="permanent" anchor="left" classes={{ paper: classes.drawerPaper }}>
                 <div>
                     <Typography variant="h5">
                         Harmony
                     </Typography>
                 </div>
-                <Button color="inherit" onClick={logoutHandler}>Logout</Button>
+                <Button color="inherit" onClick={logoutHandler} className={classes.logoutButton}>Logout</Button>
             </Drawer>
         </div>
     )

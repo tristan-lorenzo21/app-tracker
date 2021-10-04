@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 const Loading = () => {
     return (
         // <Box sx={{ display: 'flex' }}>
-        <Box style={{ width: "100%" }}>
+        <Box style={{ width: "100%", maxHeight: "0.1px" }}>
             <LinearProgress />
         </Box>
     )
