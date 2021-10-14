@@ -19,7 +19,7 @@ const App = () => {
       <div>
         <Switch>
           <PrivateRoute exact path="/" component={PrivateScreen} />
-          <DashboardRoute exact path="/displayApplications" component={Dashboard} />
+          <DashboardRoute exact path="/dashboard" component={Dashboard} />
           <Route exact path="/login" component={LoginScreen} />
           <Route exact path="/register" component={RegisterScreen} />
           <Route exact path="/forgotpassword" component={ForgotPasswordScreen} />

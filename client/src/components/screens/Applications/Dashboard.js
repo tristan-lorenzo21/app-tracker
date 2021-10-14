@@ -149,7 +149,7 @@ const Dashboard = ({ history }) => {
     ) : (
         <>
             <NavBar logoutHandler={logoutHandler} />
-            <MainDrawer logoutHandler={logoutHandler} />
+            {/* <MainDrawer logoutHandler={logoutHandler} /> */}
             {loading ? (<DisplayApplicationsChild applications={applications} />) : (<Loading size={10} />)}
             {loading ? (<Button variant="contained" color="primary" onClick={handleOpen} className={classes.createApplicationButton}>+</Button>) : (<Loading size={10} />)}
 
