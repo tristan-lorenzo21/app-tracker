@@ -11,7 +11,11 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from "@material-ui/core/styles";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import NavBar from "./NavBar";
+import axios from 'axios';
+import { useState } from 'react';
 
 const useStyles = makeStyles({
     root: {
@@ -28,6 +32,18 @@ const useStyles = makeStyles({
 
 const DisplayApplicationsChild = (props, { history }) => {
     const classes = useStyles();
+    const [error, setError] = useState("");
+    const [applications, setApplications] = useState("");
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
 
     const displayAplications = (props) => {
         const { applications } = props;
@@ -37,6 +53,27 @@ const DisplayApplicationsChild = (props, { history }) => {
                 applications.map((application, index) => {
                     const formattedDate = moment(application.dateApplied).format('MM-DD-YY');
 
+                    const deleteApplicationHandler = async (id) => {
+                        const config = {
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+                            },
+                        };
+
+                        try {
+                            axios.delete(
+                                `api/applications/deleteApplication/${application._id}`,
+                                config
+                            );
+
+                            window.location.reload();
+
+                        } catch (error) {
+                            setError(error.response.data.error);
+                        }
+                    }
+
                     return (
                         <Box component="span" style={{ display: 'inline-block', margin: '20px', padding: '10px', paddingLeft: '30px', paddingTop: '20px' }}>
                             <React.Fragment>
@@ -45,7 +82,7 @@ const DisplayApplicationsChild = (props, { history }) => {
                                         <Card variant="outlined" style={{ height: "250px", width: "300px" }}>
                                             <CardHeader
                                                 action={
-                                                    <IconButton color="primary" >
+                                                    <IconButton color="primary" onClick={handleClick}>
                                                         <MoreVertIcon fontSize="large" />
                                                     </IconButton>
                                                 }
@@ -58,6 +95,19 @@ const DisplayApplicationsChild = (props, { history }) => {
                                                     title: classes.headerTitle
                                                 }}
                                             />
+                                            <Menu
+                                                id="basic-menu"
+                                                anchorEl={anchorEl}
+                                                open={open}
+                                                onClose={handleClose}
+                                                MenuListProps={{
+                                                    'aria-labelledby': 'basic-button',
+                                                }}
+                                            >
+                                                <MenuItem onClick={deleteApplicationHandler}>Delete Application</MenuItem>
+                                                <MenuItem onClick={handleClose}>Update Application</MenuItem>
+                                                {/* <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+                                            </Menu>
                                             <CardContent style={{ paddingTop: 0, paddingLeft: "25px", paddingRight: "25px" }}>
                                                 <Typography variant="h5" component="div" style={{ fontColor: "" }}>
                                                     {application.position}

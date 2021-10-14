@@ -75,8 +75,6 @@ const Dashboard = ({ history }) => {
     const [comments, setComments] = useState("");
     const [dateApplied, setDateApplied] = useState(null);
     const [loading, setLoading] = useState(false);
-    // const [companyLogo, setCompanyLogo] = useState("");
-    // const [username, setUsername] = useState("");
 
     useEffect(() => {
         const fetchApplications = async () => {
