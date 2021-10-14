@@ -38,12 +38,10 @@ const DisplayApplicationsChild = (props, { history }) => {
                     const formattedDate = moment(application.dateApplied).format('MM-DD-YY');
 
                     return (
-                        // <Container>
-                        <Box component="span" style={{ display: 'inline-block', marginLeft: '300px' }}>
+                        <Box component="span" style={{ display: 'inline-block', margin: '20px', padding: '10px', paddingLeft: '30px', paddingTop: '20px' }}>
                             <React.Fragment>
-                                {/* <Container> */}
-                                <Grid container spacing={1} columns={1}>
-                                    <Grid item xs={1} >
+                                <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} >
+                                    <Grid item xs={2} sm={4} md={4} >
                                         <Card variant="outlined" style={{ height: "250px", width: "300px" }}>
                                             <CardHeader
                                                 action={
@@ -74,10 +72,8 @@ const DisplayApplicationsChild = (props, { history }) => {
                                         </Card>
                                     </Grid>
                                 </Grid>
-                                {/* </Container> */}
                             </React.Fragment>
                         </Box>
-                        // {/* </Container> */}
                     )
                 })
             )

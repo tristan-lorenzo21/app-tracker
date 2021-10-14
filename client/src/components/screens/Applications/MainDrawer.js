@@ -15,13 +15,21 @@ const useStyles = makeStyles({
     },
     drawerPaper: {
         width: drawerWidth,
-        background: "white"
+        background: "white",
+        // position: "relative"
     },
     logoutButton: {
-        position: "absolute",
+        // position: "absolute",
+        marginTop: "9in",
         bottom: 0,
         // right: 0,
         textAlign: "center"
+    },
+    harmonyDiv: {
+
+    },
+    harmonyText: {
+
     }
 })
 
