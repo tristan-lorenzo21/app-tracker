@@ -33,7 +33,7 @@ const LoginScreen = ({ history }) => {
             localStorage.setItem("authToken", data.token);
             localStorage.setItem("username", data.data.username);
 
-            history.push("/displayApplications");
+            history.push("/dashboard");
         } catch (error) {
             setError(error.response.data.error);
             setTimeout(() => {
