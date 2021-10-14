@@ -129,6 +129,44 @@ exports.deleteApplication = async (req, res, next) => {
 }
 
 // route that updates a selected application
-exports.updateApplication = (req, res, next) => {
-    res.status(200).json({ message: "Update application route" });
+exports.updateApplication = async (req, res, next) => {
+    // const { status, comments } = req.body;
+
+    // const user = auth.
+
+    let token;
+
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+        // Bearer 3489sdf0n9s8fs09d
+        token = req.headers.authorization.split(" ")[1];
+    }
+
+    if (!token) {
+        return next(new ErrorResponse("Not authorized to access this route", 401));
+    }
+
+    try {
+        // getting user's information
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+        const user = await User.findById(decoded.id);
+
+        if (!user) {
+            return next(new ErrorResponse("No user found with this id", 404));
+        }
+
+        const updatedApplication = await Application.findByIdAndUpdate(req.params.id,
+            {
+                status: req.body.updatedStatus,
+                comments: req.body.updatedComments
+            }
+        );
+
+        console.log(updatedApplication);
+        next();
+
+        res.status(201).json({ success: true, data: "Application updated!" })
+    } catch (error) {
+        next(error);
+    }
 }

@@ -11,7 +11,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import "react-datepicker/dist/react-datepicker.css";
-import { Drawer, FormHelperText, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import DateFnsUtils from '@date-io/date-fns';
 import {
     DatePicker,
@@ -19,10 +19,7 @@ import {
 } from '@material-ui/pickers';
 import NavBar from "./NavBar";
 import Loading from "./Loading";
-import MainDrawer from "./MainDrawer";
-import BusinessIcon from '@material-ui/icons/Business';
 
-import LinearProgress from "@material-ui/core/LinearProgress";
 
 const useStyles = makeStyles(theme => ({
     button: {
