@@ -66,57 +66,59 @@ const DisplayApplicationsChild = (props, { history }) => {
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
 
+
+    const deleteApplicationHandler = async (id) => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
+
+        try {
+            // axios.delete(
+            //     `api/applications/deleteApplication/${id}`,
+            //     config
+            // );
+            console.log(id);
+
+            // window.location.reload();
+
+        } catch (error) {
+            setError(error.response.data.error);
+        }
+    }
+
+    const updateApplicationHandler = async (id) => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
+
+        try {
+            axios.put(
+                `api/applications/updateApplication/${id}`,
+                { updatedStatus, updatedComments },
+                config
+            );
+
+            window.location.reload();
+
+        } catch (error) {
+            setError(error.response.data.error);
+        }
+    }
+
     const displayAplications = (props) => {
         const { applications } = props;
 
+
         if (applications.length > 0) {
             return (
-                applications.map((application, index) => {
+                applications.map((application, id) => {
                     const formattedDate = moment(application.dateApplied).format('MM-DD-YY');
-
-                    const deleteApplicationHandler = async (id) => {
-                        const config = {
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-                            },
-                        };
-
-                        try {
-                            axios.delete(
-                                `api/applications/deleteApplication/${application._id}`,
-                                config
-                            );
-
-                            window.location.reload();
-
-                        } catch (error) {
-                            setError(error.response.data.error);
-                        }
-                    }
-
-
-                    const updateApplicationHandler = async () => {
-                        const config = {
-                            headers: {
-                                "Content-Type": "application/json",
-                                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-                            },
-                        };
-
-                        try {
-                            axios.put(
-                                `api/applications/updateApplication/${application._id}`,
-                                { updatedStatus, updatedComments },
-                                config
-                            );
-
-                            window.location.reload();
-
-                        } catch (error) {
-                            setError(error.response.data.error);
-                        }
-                    }
 
                     return (
                         <>
@@ -140,7 +142,7 @@ const DisplayApplicationsChild = (props, { history }) => {
                                                     Update your application for {application.company}
                                                 </Typography>
 
-                                                <form onSubmit={updateApplicationHandler}>
+                                                <form onSubmit={() => updateApplicationHandler(application._id)}>
                                                     <Grid container item spacing={5} justify="center">
                                                         <Grid item xs={5}>
                                                             <TextField required placeholder={application.status} id="standard-basic" label="Status" variant="standard" onChange={(e) => setUpdatedStatus(e.target.value)} value={updatedStatus} />
@@ -160,7 +162,7 @@ const DisplayApplicationsChild = (props, { history }) => {
                                 <React.Fragment>
                                     <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} >
                                         <Grid item xs={2} sm={4} md={4} >
-                                            <Card variant="outlined" style={{ height: "250px", width: "300px" }}>
+                                            <Card variant="outlined" style={{ height: "250px", width: "300px" }} key={application._id}>
                                                 <CardHeader
                                                     action={
                                                         <IconButton color="primary" onClick={handleClick}>
@@ -187,7 +189,7 @@ const DisplayApplicationsChild = (props, { history }) => {
                                                         'aria-labelledby': 'basic-button',
                                                     }}
                                                 >
-                                                    <MenuItem onClick={deleteApplicationHandler}>Delete Application</MenuItem>
+                                                    <MenuItem onClick={() => deleteApplicationHandler(application.company)}>Delete Application</MenuItem>
                                                     <MenuItem onClick={handleOpenModal}>Update Application</MenuItem>
                                                 </Menu>
                                                 <CardContent style={{ paddingTop: 0, paddingLeft: "25px", paddingRight: "25px" }}>

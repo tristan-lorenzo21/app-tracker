@@ -42,7 +42,7 @@ const RegisterScreen = ({ history }) => {
 
             history.pushState("/displayApplications");
         } catch (error) {
-            setError(error.response.data.error);
+            setError("Error with registering");
             setTimeout(() => {
                 setError("");
             }, 5000)
