@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import * as React from "react";
 import axios from "axios";
-import DisplayApplicationsChild from "./DisplayApplicationsChild";
+// import DisplayApplicationsChild from "./DisplayApplicationsChild";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
@@ -19,6 +19,7 @@ import {
 } from '@material-ui/pickers';
 import NavBar from "./NavBar";
 import Loading from "./Loading";
+import CardList from "./Cards/CardList";
 // import Cards from "./Cards/Cards"
 
 
@@ -61,6 +62,9 @@ const Dashboard = ({ history }) => {
     // display applications state
     const [error, setError] = useState("");
     const [applications, setApplications] = useState("");
+
+    const [updatedStatus, setUpdatedStatus] = useState("");
+    const [updatedComments, setUpdatedComments] = useState("");
 
     // styles
     const classes = useStyles();
@@ -132,6 +136,50 @@ const Dashboard = ({ history }) => {
         }
     }
 
+    const deleteApplicationHandler = async (id) => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
+
+        try {
+            axios.delete(
+                `api/applications/deleteApplication/${id}`,
+                config
+            );
+            console.log(id);
+
+            window.location.reload();
+
+        } catch (error) {
+            setError(error.response.data.error);
+        }
+    }
+
+    const updateApplicationHandler = async (id) => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+        };
+
+        try {
+            axios.put(
+                `api/applications/updateApplication/${id}`,
+                { updatedStatus, updatedComments },
+                config
+            );
+
+            window.location.reload();
+
+        } catch (error) {
+            setError(error.response.data.error);
+        }
+    }
+
     // setUsername(applications[0].username);
 
     const [open, setOpen] = React.useState(false);
@@ -146,7 +194,8 @@ const Dashboard = ({ history }) => {
         <>
             <NavBar logoutHandler={logoutHandler} />
             {/* <MainDrawer logoutHandler={logoutHandler} /> */}
-            {loading ? (<DisplayApplicationsChild applications={applications} />) : (<Loading size={10} />)}
+            {/* {loading ? (<DisplayApplicationsChild applications={applications} />) : (<Loading size={10} />)} */}
+            {loading ? (<CardList applications={applications} deleteApplicationHandler={deleteApplicationHandler} updateApplicationHandler={updateApplicationHandler} setUpdatedComments={setUpdatedComments} setUpdatedStatus={setUpdatedStatus} updatedComments={updatedComments} updatedStatus={updatedStatus} />) : (<Loading size={10} />)}
             {loading ? (<Button variant="contained" color="primary" onClick={handleOpen} className={classes.createApplicationButton}>+</Button>) : (<Loading size={10} />)}
 
             <Modal
