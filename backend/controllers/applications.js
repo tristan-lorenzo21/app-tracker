@@ -130,10 +130,6 @@ exports.deleteApplication = async (req, res, next) => {
 
 // route that updates a selected application
 exports.updateApplication = async (req, res, next) => {
-    // const { status, comments } = req.body;
-
-    // const user = auth.
-
     let token;
 
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
@@ -158,7 +154,8 @@ exports.updateApplication = async (req, res, next) => {
         const updatedApplication = await Application.findByIdAndUpdate(req.params.id,
             {
                 status: req.body.updatedStatus,
-                comments: req.body.updatedComments
+                comments: req.body.updatedComments,
+                company: req.body.updatedCompany,
             }
         );
 

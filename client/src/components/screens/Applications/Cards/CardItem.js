@@ -29,8 +29,9 @@ const useStyles = makeStyles({
     },
     headerTitle: {
         maxWidth: 300,
+        maxHeight: 300,
         fontWeight: 600,
-        fontSize: 25
+        fontSize: 18
     },
 });
 
@@ -47,7 +48,7 @@ const style = {
     textAlign: "center"
 };
 
-const CardItem = ({ application, deleteApplicationHandler, updateApplicationHandler, setUpdatedComments, setUpdatedStatus, updatedComments, updatedStatus }) => {
+const CardItem = ({ application, deleteApplicationHandler, updateApplicationHandler, setUpdatedComments, setUpdatedStatus, setUpdatedCompany, updatedComments, updatedStatus, updatedCompany }) => {
     const classes = useStyles();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -90,12 +91,15 @@ const CardItem = ({ application, deleteApplicationHandler, updateApplicationHand
                                 </Typography>
 
                                 <form onSubmit={() => updateApplicationHandler(application._id)}>
-                                    <Grid container item spacing={5} justify="center">
+                                    <Grid container item spacing={5} style={{ marginTop: "1px" }} justify="center">
                                         <Grid item xs={5}>
-                                            <TextField required placeholder={application.status} id="standard-basic" label="Status" variant="standard" onChange={(e) => setUpdatedStatus(e.target.value)} value={updatedStatus} />
+                                            <TextField defaultValue="Test" id="standard-basic" label="Status" variant="standard" onChange={(e) => setUpdatedStatus(e.target.value)} value={updatedStatus} />
                                         </Grid>
                                         <Grid item xs={5}>
-                                            <TextField required placeholder={application.comments} id="standard-basic" label="Comments" variant="standard" onChange={(e) => setUpdatedComments(e.target.value)} value={updatedComments} />
+                                            <TextField defaultValue="test" id="standard-basic" label="Comments" variant="standard" onChange={(e) => setUpdatedComments(e.target.value)} value={updatedComments} />
+                                        </Grid>
+                                        <Grid item xs={5}>
+                                            <TextField defaultValue="test" id="standard-basic" label="Company" variant="standard" onChange={(e) => setUpdatedCompany(e.target.value)} value={updatedCompany} />
                                         </Grid>
                                     </Grid>
                                     <Button variant="outlined" color="primary" type="submit" style={{ marginTop: "30px" }}>Update Application</Button>

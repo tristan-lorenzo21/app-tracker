@@ -1,7 +1,7 @@
 import React from 'react'
 import CardItem from './CardItem'
 
-const CardList = ({ applications, deleteApplicationHandler, updateApplicationHandler, setUpdatedComments, setUpdatedStatus, updatedComments, updatedStatus }) => {
+const CardList = ({ applications, deleteApplicationHandler, updateApplicationHandler, setUpdatedComments, setUpdatedStatus, setUpdatedCompany, updatedComments, updatedStatus, updatedCompany }) => {
     return (
         <React.Fragment>
             {applications.map((application) => (
@@ -11,8 +11,10 @@ const CardList = ({ applications, deleteApplicationHandler, updateApplicationHan
                     updateApplicationHandler={updateApplicationHandler}
                     setUpdatedComments={setUpdatedComments}
                     setUpdatedStatus={setUpdatedStatus}
+                    setUpdatedCompany={setUpdatedCompany}
                     updatedComments={updatedComments}
                     updatedStatus={updatedStatus}
+                    updatedCompany={updatedCompany}
                 />
             ))}
         </React.Fragment>
