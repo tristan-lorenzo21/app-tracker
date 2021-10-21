@@ -5,6 +5,8 @@ import "./RegisterScreen.css";
 
 const RegisterScreen = ({ history }) => {
     const [username, setUsername] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -35,7 +37,7 @@ const RegisterScreen = ({ history }) => {
         }
 
         try {
-            const { data } = await axios.post("/api/auth/register", { username, email, password }, config);
+            const { data } = await axios.post("/api/auth/register", { username, firstName, lastName, email, password }, config);
 
             localStorage.setItem("authToken", data.token);
             localStorage.setItem("username", data.data.username);
@@ -57,6 +59,16 @@ const RegisterScreen = ({ history }) => {
                 <div className="form-group">
                     <label htmlFor="name">Username:</label>
                     <input type="text" required id="name" placeholder="Enter username:" value={username} onChange={(e) => setUsername(e.target.value)} />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="name">First Name:</label>
+                    <input type="text" required id="firstName" placeholder="Enter first name:" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="name">Last Name:</label>
+                    <input type="text" required id="lastName" placeholder="Enter last name:" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                 </div>
 
                 <div className="form-group">

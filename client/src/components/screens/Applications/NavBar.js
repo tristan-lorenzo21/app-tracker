@@ -5,12 +5,15 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import SettingsIcon from '@material-ui/icons/Settings';
+import Settings from './Settings';
 
 const style = makeStyles({
     logoutButton: {
         // float: "right",
         marginLeft: "auto",
-        marginRight: -12
+        marginRight: -1,
+        cursor: "pointer"
         // display: "inline-block",
         // marginLeft: "15in"
         // flex: 1
@@ -34,6 +37,18 @@ const NavBar = (props) => {
 
     const { logoutHandler } = props;
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     const displayNavbar = (props) => {
 
         return (
@@ -45,6 +60,7 @@ const NavBar = (props) => {
                         </Typography>
 
                         <Button color="inherit" onClick={logoutHandler} className={classes.logoutButton}>Logout</Button>
+                        {/* <Settings className={classes.logoutButton} open={open} handleClick={handleClick} handleClose={handleClose} anchorEl={anchorEl} /> */}
                     </Toolbar>
                 </AppBar>
             </Box>
@@ -58,5 +74,5 @@ const NavBar = (props) => {
     )
 }
 
-export default NavBar
+export default NavBar;
 

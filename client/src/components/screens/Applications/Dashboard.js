@@ -65,6 +65,7 @@ const Dashboard = ({ history }) => {
 
     const [updatedStatus, setUpdatedStatus] = useState("");
     const [updatedComments, setUpdatedComments] = useState("");
+    const [updatedCompany, setUpdatedCompany] = useState("");
 
     // styles
     const classes = useStyles();
@@ -132,7 +133,6 @@ const Dashboard = ({ history }) => {
 
         } catch (error) {
             setError(error.response.data.error);
-            // setError("Error");
         }
     }
 
@@ -169,7 +169,7 @@ const Dashboard = ({ history }) => {
         try {
             axios.put(
                 `api/applications/updateApplication/${id}`,
-                { updatedStatus, updatedComments },
+                { updatedStatus, updatedComments, updatedCompany },
                 config
             );
 
@@ -180,22 +180,25 @@ const Dashboard = ({ history }) => {
         }
     }
 
-    // setUsername(applications[0].username);
-
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     return error ? (
         <span className="error-message">{error}</span>
-        // <Loading size={10} />
 
     ) : (
         <>
             <NavBar logoutHandler={logoutHandler} />
-            {/* <MainDrawer logoutHandler={logoutHandler} /> */}
-            {/* {loading ? (<DisplayApplicationsChild applications={applications} />) : (<Loading size={10} />)} */}
-            {loading ? (<CardList applications={applications} deleteApplicationHandler={deleteApplicationHandler} updateApplicationHandler={updateApplicationHandler} setUpdatedComments={setUpdatedComments} setUpdatedStatus={setUpdatedStatus} updatedComments={updatedComments} updatedStatus={updatedStatus} />) : (<Loading size={10} />)}
+            {loading ? (<CardList applications={applications}
+                deleteApplicationHandler={deleteApplicationHandler}
+                updateApplicationHandler={updateApplicationHandler}
+                setUpdatedComments={setUpdatedComments}
+                setUpdatedStatus={setUpdatedStatus}
+                setUpdatedCompany={setUpdatedCompany}
+                updatedComments={updatedComments}
+                updatedStatus={updatedStatus}
+                updatedCompany={updatedCompany} />) : (<Loading size={10} />)}
             {loading ? (<Button variant="contained" color="primary" onClick={handleOpen} className={classes.createApplicationButton}>+</Button>) : (<Loading size={10} />)}
 
             <Modal
