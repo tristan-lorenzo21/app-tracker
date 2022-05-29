@@ -9,7 +9,7 @@ const axios = require('axios');
 
 // route that creates applications
 exports.createApplication = async (req, res, next) => {
-    const { company, position, stage, status, comments, dateApplied } = req.body;
+    const { company, position, stage, status, comments, dateApplied, applicationLink } = req.body;
 
     // const user = auth.
 
@@ -50,7 +50,8 @@ exports.createApplication = async (req, res, next) => {
             status,
             comments,
             dateApplied,
-            companyLogo
+            companyLogo,
+            applicationLink
         });
 
         console.log(application);

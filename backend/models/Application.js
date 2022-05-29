@@ -35,7 +35,10 @@ const ApplicationSchema = new Schema({
         type: String,
         required: true,
         default: "https://cdn-icons-png.flaticon.com/512/188/188391.png"
-    }
+    },
+    applicationLink: {
+        type: String,
+    },
 }, {
     timestamps: true,
 });
