@@ -20,6 +20,7 @@ import Modal from "@material-ui/core/Modal";
 import Fade from '@material-ui/core/Fade';
 import Backdrop from '@material-ui/core/Backdrop';
 import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link"
 
 const useStyles = makeStyles({
     root: {
@@ -123,7 +124,9 @@ const CardItem = ({ application, deleteApplicationHandler, updateApplicationHand
                                     avatar={
                                         <Avatar src={application.companyLogo} aria-label={`company-logo`} style={{ width: "55px", height: "55px" }} />
                                     }
-                                    title={application.company}
+                                    title={
+                                        <Link href={application.applicationLink}>{application.company}</Link>
+                                    }
                                     subheader={`Applied on: ${formattedDate}`}
                                     classes={{
                                         title: classes.headerTitle
