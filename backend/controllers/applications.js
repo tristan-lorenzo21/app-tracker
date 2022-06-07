@@ -157,6 +157,7 @@ exports.updateApplication = async (req, res, next) => {
                 status: req.body.updatedStatus,
                 comments: req.body.updatedComments,
                 company: req.body.updatedCompany,
+                applicationLink: req.body.updatedApplicationLink
             }
         );
 
